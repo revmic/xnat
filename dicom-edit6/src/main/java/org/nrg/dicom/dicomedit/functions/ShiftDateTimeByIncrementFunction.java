@@ -50,7 +50,7 @@ public class ShiftDateTimeByIncrementFunction extends AbstractScriptFunction {
             dateString = values.get(0).asString();
         }
         if(StringUtils.isEmpty( dateString)) {
-            log.warn("Skipping empty dateTime.");
+            return skipMissing(values.get(0));
         }
 
         final int increment = values.get(1).asInteger();

@@ -32,7 +32,7 @@ public class LowercaseScriptFunction extends AbstractScriptFunction {
         if( values.size() == 1 ) {
             final String value = (values.get(0).asObject() instanceof TagPath)? dicomObject.getString((TagPath)values.get(0).asObject()): values.get(0).asString();
             if (value == null) {
-                throw new ScriptEvaluationException("Unable to convert value for " + values.get(0) + " to lowercase. Value is null.");
+                return skipMissing(values.get(0));
             }
             return new ConstantValue(value.toLowerCase());
         }

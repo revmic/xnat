@@ -77,7 +77,6 @@ public class TestScriptApplicator {
 
     private static final String S_LOWERCASE_NULL_VALUE = "-(0008,0070)\nfoo := lowercase[(0008,0070)]";
 
-    private static final String ERROR_EVALUATING_LOWERCASE_EXPECTED_MESSAGE = "Error evaluating lowercase";
 
     private ByteArrayInputStream bytes(final String s) {
         return new ByteArrayInputStream(s.getBytes());
@@ -284,8 +283,7 @@ public class TestScriptApplicator {
         final BaseScriptApplicator a1 = BaseScriptApplicator.getInstance( bytes(S_LOWERCASE_NULL_VALUE));
         final AnonymizationResult result = a1.apply(FILE4);
         assertNotNull(result);
-        assertEquals(AnonymizationResultSeverity.ERROR, result.getSeverity());
-        assertEquals(ERROR_EVALUATING_LOWERCASE_EXPECTED_MESSAGE, result.getMessage());
+        assertNotEquals(AnonymizationResultSeverity.ERROR, result.getSeverity());
     }
 
     private static final ResourceManager _resourceManager = ResourceManager.getInstance();

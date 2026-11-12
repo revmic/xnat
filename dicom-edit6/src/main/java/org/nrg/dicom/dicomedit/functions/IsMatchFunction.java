@@ -37,6 +37,10 @@ public class IsMatchFunction extends AbstractScriptFunction {
                 throw new ScriptEvaluationException("usage: ismatch[ value, regex]");
             }
             String value = (values.get(0).asObject() instanceof TagPath)? dicomObject.getString((TagPath)values.get(0).asObject()): values.get(0).asString();
+            if (value == null) {
+                // A missing value doesn't match, the same as the ~ operator.
+                return new ConstantValue(false);
+            }
             String regex = values.get(1).asString();
 
             Pattern pattern = Pattern.compile( regex);

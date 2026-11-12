@@ -9,6 +9,22 @@ earlier one: 6.10.0 accepts `version "6.10"`, and 6.11.0 will accept `version "6
 version means the same as any other; declaring a newer one makes older engines reject the script as
 unsupported rather than run it without whatever changed. A patch release adds no script version.
 
+## 6.10.0 to 6.10.1
+
+### Scripts
+
+A function whose input tag is missing no longer fails the object. `shiftDateByIncrement`,
+`shiftDateTimeByIncrement`, `lowercase`, `uppercase`, `substring`, `replace` and `match` return null
+for a missing tag, so assigning the result leaves the target as it was, and the rest of the script
+runs. Each logs a warning naming the tag. The two date shifts and `substring` do the same for an
+empty value. `ismatch` returns false for a missing tag, as the `~` operator does.
+
+Before, these failed the object, so scripts needed an `isPresent[]` guard on each such line. The
+date shifts had done so since 6.6.0; up to 6.5.1 they returned the empty value. Guarded scripts
+behave the same. A tag that is present with a value the function
+can't use, such as a date that doesn't parse, still fails the object, and so does a date shift on a
+tag whose VR isn't a date.
+
 ## 6.9.1 to 6.10.0
 
 ### Scripts

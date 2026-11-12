@@ -389,8 +389,8 @@ public class TestShiftDateTimeByIncrementFunction {
 
         final BaseScriptApplicator sa = BaseScriptApplicator.getInstance( bytes(script));
         AnonymizationResult result = sa.apply(dobj);
-        assertTrue(result instanceof AnonymizationResultError);
-        assertTrue(String.join("\n", result.getMessages()).contains("Failed to parse DICOM time string"));
+        assertFalse(result instanceof AnonymizationResultError);
+        assertNull(result.getDicomObject().getString(t1.tag));
     }
 
     private ByteArrayInputStream bytes(final String s) {

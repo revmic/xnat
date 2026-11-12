@@ -29,6 +29,9 @@ public class ReplaceScriptFunction extends AbstractScriptFunction {
     @Override
     public Value apply(List<Value> values, DicomObjectI dicomObject) {
         final String string = (values.get(0).asObject() instanceof TagPath)? dicomObject.getString((TagPath)values.get(0).asObject()): values.get(0).asString();
+        if (string == null) {
+            return skipMissing(values.get(0));
+        }
         final String find    = values.get(1).asString();
         final String replace = values.get(2).asString();
 

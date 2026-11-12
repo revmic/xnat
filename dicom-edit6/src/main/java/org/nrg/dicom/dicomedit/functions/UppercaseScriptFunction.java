@@ -28,6 +28,9 @@ public class UppercaseScriptFunction extends AbstractScriptFunction {
     @Override
     public Value apply(List<Value> values, DicomObjectI dicomObject) {
         final String value = (values.get(0).asObject() instanceof TagPath)? dicomObject.getString((TagPath)values.get(0).asObject()): values.get(0).asString();
+        if (value == null) {
+            return skipMissing(values.get(0));
+        }
         return new ConstantValue(value.toUpperCase());
     }
 }

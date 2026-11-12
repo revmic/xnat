@@ -40,6 +40,9 @@ public class MatchFunction extends AbstractScriptFunction {
                 throw new ScriptEvaluationException("usage: match[ value, regex, group-index ]");
             }
             String value = (values.get(0).asObject() instanceof TagPath)? dicomObject.getString((TagPath)values.get(0).asObject()): values.get(0).asString();
+            if (value == null) {
+                return skipMissing(values.get(0));
+            }
             String regex = values.get(1).asString();
             int index = values.get(2).asInteger();
 

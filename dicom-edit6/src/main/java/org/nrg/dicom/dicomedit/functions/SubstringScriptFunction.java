@@ -28,6 +28,9 @@ public class SubstringScriptFunction extends AbstractScriptFunction {
     @Override
     public Value apply(List<Value> values, DicomObjectI dicomObject) {
         final String string = (values.get(0).asObject() instanceof TagPath)? dicomObject.getString((TagPath)values.get(0).asObject()): values.get(0).asString();
+        if (string == null || string.isEmpty()) {
+            return skipMissing(values.get(0));
+        }
         final int beginIndex = values.get(1).asInteger();
         final int endIndex = values.get(2).asInteger();
 
